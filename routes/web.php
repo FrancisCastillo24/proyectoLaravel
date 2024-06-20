@@ -16,4 +16,5 @@ Route::get('/pelicula', function () {
 Route::get('pelicula/create', [PeliculaController::class, 'create']);
 */
 
+// Ruta principal
 Route::resource('pelicula', PeliculaController::class);

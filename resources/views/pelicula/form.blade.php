@@ -2,6 +2,7 @@
 
 <!--FORMULARIO REUTILIZABLE-->
 <!--Al ser un formulario reutilizable, cuando editemos nos muestra su información original, pero si creamos no debe mostrarlo, por lo que nos aseguramos de que exista o no-->
+<h1>{{$modo}} pelicula</h1>
 <label for="Title">Nombre de la película</label>
 <input type="text" name="Title" value="{{isset($pelicula->Title) ? $pelicula->Title : ''}}" id="Title"><br><br>
 
@@ -22,6 +23,6 @@
 <img src="{{asset('storage').'/'.$pelicula->Photo}}" width="100" alt="">
 @endif
 <input type="file" name="Photo" value="" id="Photo"><br><br>
-
-<input type="submit" value="Guardar datos"><br><br>
+<!--Cada botón de formulario tendrá su valor-->
+<input type="submit" value="{{$modo}}"><br><br>
 <a href="{{url('pelicula/')}}">Regresar</a>

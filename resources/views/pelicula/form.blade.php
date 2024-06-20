@@ -23,4 +23,5 @@
 @endif
 <input type="file" name="Photo" value="" id="Photo"><br><br>
 
-<input type="submit" value="Guardar datos">
+<input type="submit" value="Guardar datos"><br><br>
+<a href="{{url('pelicula/')}}">Regresar</a>

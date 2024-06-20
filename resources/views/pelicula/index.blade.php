@@ -1,3 +1,4 @@
+<a href="{{url('pelicula/create')}}">Registrar película</a>
 <table class="table table-light">
     <thead class="thead-light">
         <tr>

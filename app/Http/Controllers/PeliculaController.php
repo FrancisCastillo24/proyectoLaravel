@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelicula;
 use Illuminate\Http\Request;
+use  Illuminate\Support\Facades\Storage;
 
 class PeliculaController extends Controller
 {
@@ -34,14 +35,14 @@ class PeliculaController extends Controller
         // Recolecta toda la información del formulario pelicula
         $datosPelicula = request()->except('_token');
 
+        // Si existe el archivo de foto
+        if ($request->hasFile('Photo')) {
+            // Alteramos el campo y lo insertamos en public uploads
+            $datosPelicula['Photo'] = $request->file('Photo')->store('uploads', 'public');
+        }
+
         // Insertalo a la base de datos excepto el token
         Pelicula::insert($datosPelicula);
-
-        // Si existe el archivo de foto
-        if ($request->hasFile("Photo")) {
-            // Alteramos el campo y lo insertamos en public uploads
-            $datosPelicula["Photo"] = $request->file("Photo")->store("uploads", "public");
-        }
 
         return response()->json($datosPelicula);
     }
@@ -72,8 +73,20 @@ class PeliculaController extends Controller
     {
         // Actualiza la información en la tabla de la base de datos
         $datosPelicula = $request->except(['_token', '_method']);
-        Pelicula::where('id','=',$id)->update($datosPelicula); // ¿Coincide con el id?
 
+        // Si existe el archivo de foto
+        if ($request->hasFile('Photo')) {
+            // Recuperamos la información
+            $pelicula = Pelicula::findOrFail($id);
+
+            // Haz el borrado antiguo foto
+            Storage::delete('public/'.$pelicula->Photo);
+            
+            // Alteramos el campo y lo insertamos en public uploads
+            $datosPelicula['Photo'] = $request->file('Photo')->store('uploads', 'public');
+        }
+
+        Pelicula::where('id','=',$id)->update($datosPelicula); // ¿Coincide con el id?
         $pelicula = Pelicula::findOrFail($id);
         return view('pelicula.edit', compact('pelicula'));
     }

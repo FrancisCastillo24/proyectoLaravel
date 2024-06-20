@@ -17,6 +17,7 @@
 <input type="text" name="Director" value="{{$pelicula->Director}}" id="Director"><br><br>
 
 <label for="Photo">Añadir foto</label>
-<input type="file" name="Photo" value="{{$pelicula->Photo}}" id="Photo"><br><br>
+<img src="{{asset('storage').'/'.$pelicula->Photo}}" width="100" alt="">
+<input type="file" name="Photo" value="" id="Photo"><br><br>
 
 <input type="submit" value="Guardar datos">

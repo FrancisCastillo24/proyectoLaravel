@@ -1,8 +1,7 @@
-Mostrar las lista de peliculas :)
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
-            <th>#</th>
+            <th>Código</th>
             <th>Portada</th>
             <th>Title</th>
             <th>Description</th>
@@ -16,7 +15,9 @@ Mostrar las lista de peliculas :)
         @foreach($peliculas as $pelicula)
         <tr>
             <td>{{$pelicula->id}}</td>
-            <td>{{$pelicula->Photo}}</td>
+            <td>
+                <img src="{{ asset('storage').'/'.$pelicula->Photo }}" width="100" alt="">
+            </td>
             <td>{{$pelicula->Title}}</td>
             <td>{{$pelicula->Description}}</td>
             <td>{{$pelicula->Release_date}}</td>

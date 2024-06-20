@@ -96,8 +96,14 @@ class PeliculaController extends Controller
      */
     public function destroy($id)
     {
-        // Eliminar una tabla
-        Pelicula::destroy($id);
+        // Eliminar la foto de storage, busco la información a partir del id
+        $pelicula = Pelicula::findOrFail($id);
+
+        // Si existe, vas a borrar la foto que tienes en public también
+        if (Storage::delete('public/'.$pelicula->Photo)) {
+            // Eliminar una tabla
+            Pelicula::destroy($id);
+        }
 
         // Después del borrado redirigue nuevamente
         return redirect('pelicula');

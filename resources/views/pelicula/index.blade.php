@@ -1,3 +1,9 @@
+<!--Si existe el mensaje (informar al usuario del éxito de alguna acción)-->
+@if(@Session::has('mensaje'))
+<!--Muéstralo-->
+{{Session::get('mensaje')}}
+@endif
+
 <a href="{{url('pelicula/create')}}">Registrar película</a>
 <table class="table table-light">
     <thead class="thead-light">

@@ -44,7 +44,8 @@ class PeliculaController extends Controller
         // Insertalo a la base de datos excepto el token
         Pelicula::insert($datosPelicula);
 
-        return response()->json($datosPelicula);
+        //return response()->json($datosPelicula);
+        return redirect('pelicula')->with('mensaje', 'Pelicula agregado con éxito');
     }
 
     /**
@@ -106,6 +107,6 @@ class PeliculaController extends Controller
         }
 
         // Después del borrado redirigue nuevamente
-        return redirect('pelicula');
+        return redirect('pelicula')->with('mensaje', 'Pelicula eliminado con éxito');;
     }
 }

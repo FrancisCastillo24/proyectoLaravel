@@ -14,7 +14,7 @@ class PeliculaController extends Controller
     public function index()
     {
         // Mostramos los datos (los 5 primeros registros)
-        $datos["peliculas"] = Pelicula::paginate(1);
+        $datos["peliculas"] = Pelicula::paginate(5);
         return view('pelicula.index', $datos);
     }
 
@@ -35,7 +35,7 @@ class PeliculaController extends Controller
         // Validamos cada campo de registro
         $camposValidacion = [
             'Title' => 'required|string|max:100',
-            'Description' => 'required|string|max:300',
+            'Description' => 'required|string|min:50',
             'Release_date' => 'required',
             'Runtime' => 'required|integer|min:1',
             'Director' => 'required|string|max:100',
@@ -92,7 +92,7 @@ class PeliculaController extends Controller
         // Validamos cada campo de registro
         $camposValidacion = [
             'Title' => 'required|string|max:100',
-            'Description' => 'required|string|max:300',
+            'Description' => 'required|string|min:50',
             'Release_date' => 'required',
             'Runtime' => 'required|integer|min:1',
             'Director' => 'required|string|max:100',

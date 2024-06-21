@@ -32,6 +32,23 @@ class PeliculaController extends Controller
      */
     public function store(Request $request)
     {
+        // Validamos cada campo de registro
+        $camposValidacion = [
+            'Title'=>'required|string|max:100',
+            'Description'=>'required|string|max:300',
+            'Release_date'=>'required',
+            'Runtime'=>'required|integer|min:1',
+            'Director'=>'required|string|max:100',
+            'Photo'=>'required|max:10000|mimes:jpeg,png,jpg'
+        ];
+
+        $mensaje= [
+            'required' => 'El :attribute es requerido',
+            'Photo.required' => 'La foto es requerido'
+        ];
+
+        $this->validate($request, $camposValidacion, $mensaje);
+
         // Recolecta toda la información del formulario pelicula
         $datosPelicula = request()->except('_token');
 

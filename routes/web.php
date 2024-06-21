@@ -27,6 +27,7 @@ Route::get('/home', [PeliculaController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function (){
     Route::get('/', [PeliculaController::class, 'index'])->name('home');
 });
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/videojuego', [VideojuegosController::class, 'index'])->name('videojuego.index');
 });

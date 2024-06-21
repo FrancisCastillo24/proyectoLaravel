@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container my-5" style="background-color: #f8f9fa; border-radius: 10px; padding: 20px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);">
     @if(Session::has('mensaje'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ Session::get('mensaje') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     @endif
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Listado de Películas</h2>
+        <h2 class="text-primary">Listado de Películas</h2>
         <a href="{{ url('pelicula/create') }}" class="btn btn-primary">Registrar Película</a>
     </div>
 
@@ -54,7 +57,6 @@
             </tbody>
         </table>
     </div>
-    <!--Aquí va la paginación-->
-    {!!$peliculas->links()!!}
+    {!! $peliculas->links() !!}
 </div>
 @endsection

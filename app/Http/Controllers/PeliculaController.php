@@ -14,7 +14,7 @@ class PeliculaController extends Controller
     public function index()
     {
         // Mostramos los datos (los 5 primeros registros)
-        $datos["peliculas"] = Pelicula::paginate(5);
+        $datos["peliculas"] = Pelicula::paginate(1);
         return view('pelicula.index', $datos);
     }
 
@@ -34,15 +34,15 @@ class PeliculaController extends Controller
     {
         // Validamos cada campo de registro
         $camposValidacion = [
-            'Title'=>'required|string|max:100',
-            'Description'=>'required|string|max:300',
-            'Release_date'=>'required',
-            'Runtime'=>'required|integer|min:1',
-            'Director'=>'required|string|max:100',
-            'Photo'=>'required|max:10000|mimes:jpeg,png,jpg'
+            'Title' => 'required|string|max:100',
+            'Description' => 'required|string|max:300',
+            'Release_date' => 'required',
+            'Runtime' => 'required|integer|min:1',
+            'Director' => 'required|string|max:100',
+            'Photo' => 'required|max:10000|mimes:jpeg,png,jpg'
         ];
 
-        $mensaje= [
+        $mensaje = [
             'required' => 'El :attribute es requerido',
             'Photo.required' => 'La foto es requerido'
         ];
@@ -89,24 +89,45 @@ class PeliculaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validamos cada campo de registro
+        $camposValidacion = [
+            'Title' => 'required|string|max:100',
+            'Description' => 'required|string|max:300',
+            'Release_date' => 'required',
+            'Runtime' => 'required|integer|min:1',
+            'Director' => 'required|string|max:100',
+        ];
+
+        $mensaje = [
+            'required' => 'El :attribute es requerido',
+        ];
+
+        // Si existe el archivo de foto
+        if ($request->hasFile('Photo')) {
+            $camposValidacion = ['Photo' => 'required|max:10000|mimes:jpeg,png,jpg'];
+            $mensaje = ['Photo.required' => 'La foto es requerido'];
+        }
+        $this->validate($request, $camposValidacion, $mensaje);
+
         // Actualiza la información en la tabla de la base de datos
         $datosPelicula = $request->except(['_token', '_method']);
 
-        // Si existe el archivo de foto
+        // Si existe el archivo de foto, sale la validación
         if ($request->hasFile('Photo')) {
             // Recuperamos la información
             $pelicula = Pelicula::findOrFail($id);
 
             // Haz el borrado antiguo foto
-            Storage::delete('public/'.$pelicula->Photo);
-            
+            Storage::delete('public/' . $pelicula->Photo);
+
             // Alteramos el campo y lo insertamos en public uploads
             $datosPelicula['Photo'] = $request->file('Photo')->store('uploads', 'public');
         }
 
-        Pelicula::where('id','=',$id)->update($datosPelicula); // ¿Coincide con el id?
+        Pelicula::where('id', '=', $id)->update($datosPelicula); // ¿Coincide con el id?
         $pelicula = Pelicula::findOrFail($id);
-        return view('pelicula.edit', compact('pelicula'));
+        // return view('pelicula.edit', compact('pelicula'));
+        return redirect('pelicula')->with('mensaje', 'Pelicula editado con éxito');
     }
 
     /**
@@ -118,7 +139,7 @@ class PeliculaController extends Controller
         $pelicula = Pelicula::findOrFail($id);
 
         // Si existe, vas a borrar la foto que tienes en public también
-        if (Storage::delete('public/'.$pelicula->Photo)) {
+        if (Storage::delete('public/' . $pelicula->Photo)) {
             // Eliminar una tabla
             Pelicula::destroy($id);
         }

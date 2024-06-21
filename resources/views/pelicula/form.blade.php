@@ -49,7 +49,7 @@
             </div>
             @endif
             <input type="file" class="form-control-file" name="Photo" id="Photo">
-        </div>
+        </div><br>
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary">{{ $modo }}</button>

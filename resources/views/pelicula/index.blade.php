@@ -1,4 +1,8 @@
 <!--Si existe el mensaje (informar al usuario del éxito de alguna acción)-->
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
 @if(@Session::has('mensaje'))
 <!--Muéstralo-->
 {{Session::get('mensaje')}}
@@ -46,3 +50,5 @@
         @endforeach
     </tbody>
 </table>
+</div>
+@endsection

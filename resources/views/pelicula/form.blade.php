@@ -1,28 +1,42 @@
-<!--Formulario que tendrá los datos en común con create y edit-->
-
 <!--FORMULARIO REUTILIZABLE-->
-<!--Al ser un formulario reutilizable, cuando editemos nos muestra su información original, pero si creamos no debe mostrarlo, por lo que nos aseguramos de que exista o no-->
-<h1>{{$modo}} pelicula</h1>
-<label for="Title">Nombre de la película</label>
-<input type="text" name="Title" value="{{isset($pelicula->Title) ? $pelicula->Title : ''}}" id="Title"><br><br>
+<h1>{{ $modo }} película</h1>
 
-<label for="Description">Descripción de la película</label>
-<input type="text" name="Description" value="{{isset($pelicula->Description) ? $pelicula->Description : ''}}" id="Description"><br><br>
+<div class="form-group">
+    <label for="Title">Nombre de la película</label>
+    <input type="text" class="form-control" name="Title" value="{{ old('Title', isset($pelicula->Title) ? $pelicula->Title : '') }}" id="Title" required>
+</div>
 
-<label for="Release_date">Fecha lanzamiento de la película</label>
-<input type="date" name="Release_date" value="{{isset($pelicula->Release_date) ? $pelicula->Release_date : ''}}" id="Release_date"><br><br>
+<div class="form-group">
+    <label for="Description">Descripción de la película</label>
+    <input type="text" class="form-control" name="Description" value="{{ old('Description', isset($pelicula->Description) ? $pelicula->Description : '') }}" id="Description" required>
+</div>
 
-<label for="Runtime">Duración de la película</label>
-<input type="number" name="Runtime" value="{{isset($pelicula->Runtime) ? $pelicula->Runtime : ''}}" id="Runtime"><br><br>
+<div class="form-group">
+    <label for="Release_date">Fecha de lanzamiento</label>
+    <input type="date" class="form-control" name="Release_date" value="{{ old('Release_date', isset($pelicula->Release_date) ? $pelicula->Release_date : '') }}" id="Release_date" required>
+</div>
 
-<label for="Director">Director de la película</label>
-<input type="text" name="Director" value="{{isset($pelicula->Director) ? $pelicula->Director : ''}}" id="Director"><br><br>
+<div class="form-group">
+    <label for="Runtime">Duración (minutos)</label>
+    <input type="number" class="form-control" name="Runtime" value="{{ old('Runtime', isset($pelicula->Runtime) ? $pelicula->Runtime : '') }}" id="Runtime" required>
+</div>
 
-<label for="Photo">Añadir foto</label>
-@if(isset($pelicula->Photo))
-<img src="{{asset('storage').'/'.$pelicula->Photo}}" width="100" alt="">
-@endif
-<input type="file" name="Photo" value="" id="Photo"><br><br>
-<!--Cada botón de formulario tendrá su valor-->
-<input type="submit" value="{{$modo}}"><br><br>
-<a href="{{url('pelicula/')}}">Regresar</a>
+<div class="form-group">
+    <label for="Director">Director de la película</label>
+    <input type="text" class="form-control" name="Director" value="{{ old('Director', isset($pelicula->Director) ? $pelicula->Director : '') }}" id="Director" required>
+</div>
+
+<div class="form-group">
+    <label for="Photo">Añadir foto</label>
+    @if(isset($pelicula->Photo))
+    <div>
+        <img src="{{ asset('storage').'/'.$pelicula->Photo }}" width="100" alt="Foto de la película">
+    </div><br>
+    @endif
+    <input type="file" class="form-control-file" name="Photo" id="Photo">
+</div><br>
+
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">{{ $modo }}</button>
+    <a href="{{ url('pelicula/') }}" class="btn btn-secondary">Regresar</a>
+</div>

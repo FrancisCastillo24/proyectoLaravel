@@ -18,7 +18,7 @@ Route::get('pelicula/create', [PeliculaController::class, 'create']);
 
 // Ruta principal
 Route::resource('pelicula', PeliculaController::class)->middleware('auth'); // cuando pongo el middleware, le estoy diciendo que respete la autenticación, de lo contrario si no estás autenticado no puedes acceder a nada
-Auth::routes(['register'=>false, 'reset'=>false]); // Le digo que no quiero el registro ni el resetear, no lo voy a utilizar
+Auth::routes(['reset'=>false]); // Le digo que no quiero el resetear, no lo voy a utilizar
 
 // Cuando te registras y estas registrado, si regresas te redirigue a home
 Route::get('/home', [PeliculaController::class, 'index'])->name('home');

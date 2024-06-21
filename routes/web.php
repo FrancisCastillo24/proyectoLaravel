@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeliculaController;
+use App\Http\Controllers\VideojuegosController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -26,5 +27,12 @@ Route::get('/home', [PeliculaController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function (){
     Route::get('/', [PeliculaController::class, 'index'])->name('home');
 });
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/videojuego', [VideojuegosController::class, 'index'])->name('videojuego.index');
+});
 
-// Autenticación
+Route::get('/videojuego/create', [VideojuegosController::class, 'create'])->name('videojuego.create');
+Route::post('/videojuego', [VideojuegosController::class, 'store'])->name('videojuego.store');
+Route::delete('/videojuego/{id}', [VideojuegosController::class, 'destroy'])->name('videojuego.destroy');
+Route::get('/videojuego/{id}/edit', [VideojuegosController::class, 'edit'])->name('videojuego.edit');
+Route::patch('/videojuego/{id}', [VideojuegosController::class, 'update'])->name('videojuego.update');
